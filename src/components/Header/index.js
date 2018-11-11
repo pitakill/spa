@@ -1,0 +1,30 @@
+// @flow
+import * as React from 'react'
+import type { HeaderProps } from './types'
+import { Box, Heading, Menu } from 'grommet'
+import { Login, Logout, User } from 'grommet-icons'
+
+const Header = (props: HeaderProps): React.Element<typeof Box> =>
+  <Box
+    tag='header'
+    direction='row'
+    align='center'
+    justify='between'
+    pad={{ left: 'medium', right: 'medium', vertical: 'small' }}
+    elevation='medium'
+  >
+      <Heading level='2' margin='none'>Single Page Application</Heading>
+      <Box direction='row' gap='large'>
+        <Menu
+          label={<User />}
+          items={[
+            { label: props.loggedIn ? ' Logout' : ' Login',
+              icon: props.loggedIn ? <Logout /> : <Login />,
+              onClick: props.loggedIn ? props.logOut : props.logIn
+            }
+          ]}
+        />
+      </Box>
+  </Box>
+
+export default Header
