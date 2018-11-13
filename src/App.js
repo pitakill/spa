@@ -63,6 +63,7 @@ class App extends React.Component<AppProps, AppState> {
       <Grommet theme={grommet}>
         <Box fill>
           <Header
+            avatar={this.state.user.avatar}
             logIn={this.handleLogin}
             logOut={this.handleLogout}
             loggedIn={this.state.user.loggedIn}

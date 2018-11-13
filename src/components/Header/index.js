@@ -4,6 +4,8 @@ import type { HeaderProps } from './types'
 import { Box, Heading, Menu } from 'grommet'
 import { Login, Logout, User } from 'grommet-icons'
 
+import Avatar from '../Avatar'
+
 const Header = (props: HeaderProps): React.Element<typeof Box> =>
   <Box
     tag='header'
@@ -16,7 +18,7 @@ const Header = (props: HeaderProps): React.Element<typeof Box> =>
       <Heading level='2' margin='none'>Single Page Application</Heading>
       <Box direction='row' gap='large'>
         <Menu
-          label={<User />}
+          label={props.loggedIn ? <Avatar avatar={props.avatar} size='30px' /> : <User />}
           items={[
             { label: props.loggedIn ? ' Logout' : ' Login',
               icon: props.loggedIn ? <Logout /> : <Login />,
