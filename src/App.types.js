@@ -6,5 +6,6 @@ export type User = {
 }
 export type AppProps = {}
 export type AppState = {
-  user: User & { loggedIn: boolean }
+  user: User & { loggedIn: boolean },
+  locale: string
 }

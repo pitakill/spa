@@ -3,10 +3,22 @@ import * as React from 'react'
 import type { AppProps, AppState } from './App.types'
 import { Grommet, Box } from 'grommet'
 import { grommet } from 'grommet/themes'
+import { addLocaleData, IntlProvider } from 'react-intl'
+import locale_en from 'react-intl/locale-data/en'
+import locale_es from 'react-intl/locale-data/es'
 
 import Body from './components/Body'
 import Header from './components/Header'
 import * as firebase from './firebase'
+import messages_en from './translations/en.json'
+import messages_es from './translations/es.json'
+
+addLocaleData([...locale_en, ...locale_es])
+
+const messages = {
+  en: messages_en,
+  es: messages_es
+}
 
 class App extends React.Component<AppProps, AppState> {
   state = {
@@ -15,7 +27,8 @@ class App extends React.Component<AppProps, AppState> {
       email: '',
       loggedIn: false,
       name: '',
-    }
+    },
+    locale: 'es'
   }
 
   componentDidMount(): void {
@@ -61,15 +74,17 @@ class App extends React.Component<AppProps, AppState> {
   render(): React.Element<typeof Grommet> {
     return (
       <Grommet theme={grommet}>
-        <Box fill>
-          <Header
-            avatar={this.state.user.avatar}
-            logIn={this.handleLogin}
-            logOut={this.handleLogout}
-            loggedIn={this.state.user.loggedIn}
-          />
-          <Body user={this.state.user}/>
-        </Box>
+        <IntlProvider locale={this.state.locale} messages={messages[this.state.locale]}>
+          <Box fill>
+            <Header
+              avatar={this.state.user.avatar}
+              logIn={this.handleLogin}
+              logOut={this.handleLogout}
+              loggedIn={this.state.user.loggedIn}
+            />
+            <Body user={this.state.user}/>
+          </Box>
+        </IntlProvider>
       </Grommet>
     )
   }
