@@ -2,7 +2,7 @@
 import * as React from 'react'
 import type { HeaderProps } from './types'
 import { Box, Heading, Menu } from 'grommet'
-import { Login, Logout, User } from 'grommet-icons'
+import { Flag, Login, Logout, User } from 'grommet-icons'
 import { FormattedMessage } from 'react-intl'
 
 import Avatar from '../Avatar'
@@ -23,7 +23,13 @@ const Header = (props: HeaderProps): React.Element<typeof Box> =>
         <Menu
           label={props.loggedIn ? <Avatar avatar={props.avatar} size='30px' /> : <User />}
           items={[
-            { label: props.loggedIn ? <FormattedMessage id='logout' /> : <FormattedMessage id='login' />,
+            {
+              label: props.locale === 'en' ? 'es' : 'en',
+              icon: <Flag />,
+              onClick: props.changeLocale
+            },
+            {
+              label: props.loggedIn ? <FormattedMessage id='logout' /> : <FormattedMessage id='login' />,
               icon: props.loggedIn ? <Logout /> : <Login />,
               onClick: props.loggedIn ? props.logOut : props.logIn
             }

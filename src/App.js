@@ -46,6 +46,10 @@ class App extends React.Component<AppProps, AppState> {
       })
   }
 
+  changeLocale = () => {
+    this.setState({locale: this.state.locale === 'en' ? 'es' : 'en'})
+  }
+
   handleLogin = (): void => {
     firebase
       .auth
@@ -78,6 +82,8 @@ class App extends React.Component<AppProps, AppState> {
           <Box fill>
             <Header
               avatar={this.state.user.avatar}
+              changeLocale={this.changeLocale}
+              locale={this.state.locale}
               logIn={this.handleLogin}
               logOut={this.handleLogout}
               loggedIn={this.state.user.loggedIn}
