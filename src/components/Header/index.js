@@ -7,35 +7,41 @@ import { FormattedMessage } from 'react-intl'
 
 import Avatar from '../Avatar'
 
+import { UserContextConsumer } from '../UserContext'
+
 const Header = (props: HeaderProps): React.Element<typeof Box> =>
-  <Box
-    tag='header'
-    direction='row'
-    align='center'
-    justify='between'
-    pad={{ left: 'medium', right: 'medium', vertical: 'small' }}
-    elevation='medium'
-  >
-      <Heading level='2' margin='none'>
-        <FormattedMessage id='app.title' />
-      </Heading>
-      <Box direction='row' gap='large'>
-        <Menu
-          label={props.loggedIn ? <Avatar avatar={props.avatar} size='30px' /> : <User />}
-          items={[
-            {
-              label: props.locale === 'en' ? 'es' : 'en',
-              icon: <Flag />,
-              onClick: props.changeLocale
-            },
-            {
-              label: props.loggedIn ? <FormattedMessage id='logout' /> : <FormattedMessage id='login' />,
-              icon: props.loggedIn ? <Logout /> : <Login />,
-              onClick: props.loggedIn ? props.logOut : props.logIn
-            }
-          ]}
-        />
+  <UserContextConsumer>
+    { context =>
+      <Box
+        tag='header'
+        direction='row'
+        align='center'
+        justify='between'
+        pad={{ left: 'medium', right: 'medium', vertical: 'small' }}
+        elevation='medium'
+      >
+          <Heading level='2' margin='none'>
+            <FormattedMessage id='app.title' />
+          </Heading>
+          <Box direction='row' gap='large'>
+            <Menu
+              label={context.state.loggedIn ? <Avatar size='30px' /> : <User />}
+              items={[
+                {
+                  label: props.locale === 'en' ? 'es' : 'en',
+                  icon: <Flag />,
+                  onClick: props.changeLocale
+                },
+                {
+                  label: context.state.loggedIn ? <FormattedMessage id='logout' /> : <FormattedMessage id='login' />,
+                  icon: context.state.loggedIn ? <Logout /> : <Login />,
+                  onClick: context.state.loggedIn ? context.handleLogout : context.handleLogin
+                }
+              ]}
+            />
+          </Box>
       </Box>
-  </Box>
+    }
+  </UserContextConsumer>
 
 export default Header
