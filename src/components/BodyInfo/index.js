@@ -2,20 +2,29 @@
 import * as React from 'react'
 import { Box, Heading } from 'grommet'
 
-import type { BodyInfoChildProps, BodyInfoProps } from './types'
+import type { BodyAvatarProps, BodyInfoProps } from './types'
 
 import Avatar from '../Avatar'
+import { UserContextConsumer } from '../UserContext'
 
-const BodyAvatar = (props: BodyInfoChildProps) => {
+const BodyAvatar = (props: BodyAvatarProps) => {
   const { size = 'xsmall' } = props
   return <Avatar size={size} />
 }
 
-const BodyEmail = ({email}: BodyInfoChildProps) =>
-  <Heading level='4' margin='none'>{email}</Heading>
+const BodyEmail = () =>
+  <UserContextConsumer>
+    { context =>
+        <Heading level='4' margin='none'>{context.state.email}</Heading>
+    }
+  </UserContextConsumer>
 
-const BodyName = ({name}: BodyInfoChildProps) =>
-  <Heading level='4' margin='none'>{name}</Heading>
+const BodyName = () =>
+  <UserContextConsumer>
+    { context =>
+        <Heading level='4' margin='none'>{context.state.name}</Heading>
+    }
+  </UserContextConsumer>
 
 class BodyInfo extends React.Component<BodyInfoProps, void> {
   static Avatar = BodyAvatar
@@ -23,11 +32,9 @@ class BodyInfo extends React.Component<BodyInfoProps, void> {
   static Name = BodyName
 
   render() {
-    const { email, name } = this.props
-
     const children = React.Children.map(
       this.props.children,
-      child => React.cloneElement(child, { email, name })
+      child => React.cloneElement(child)
     )
 
     return (
@@ -44,6 +51,4 @@ class BodyInfo extends React.Component<BodyInfoProps, void> {
   }
 }
 
-export {
-  BodyInfo,
-}
+export default BodyInfo
