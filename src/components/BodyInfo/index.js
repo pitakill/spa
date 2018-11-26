@@ -2,7 +2,13 @@
 import * as React from 'react'
 import { Box, Heading } from 'grommet'
 
-import type { BodyAvatarProps, BodyInfoProps } from './types'
+import type {
+  BodyAvatarProps,
+  BodyInfoProps,
+  BodyHOCProps,
+  BodyHOCState,
+  ComponentShape
+} from './types'
 
 import Avatar from '../Avatar'
 import { UserContextConsumer } from '../UserContext'
@@ -51,4 +57,21 @@ class BodyInfo extends React.Component<BodyInfoProps, void> {
   }
 }
 
-export default BodyInfo
+function withBodyInfo (Component: ComponentShape) {
+  return class extends React.Component<BodyHOCProps, BodyHOCState> {
+    render() {
+      return (
+        <UserContextConsumer>
+          { context =>
+              <Component {...context.state} />
+          }
+        </UserContextConsumer>
+      )
+    }
+  }
+}
+
+export {
+  BodyInfo,
+  withBodyInfo
+}
