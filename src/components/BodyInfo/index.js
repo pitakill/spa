@@ -48,7 +48,13 @@ class BodyInfo extends React.Component<BodyInfoProps, void> {
               gap='large'
               margin={{top: 'medium'}}
             >
-              {this.props.render(context.state)}
+              { this.props.render({
+                  ...context.state,
+                  aditionalProps: {
+                    'aria-expanded': false
+                  }
+                })
+              }
             </Box>
         }
       </UserContextConsumer>
