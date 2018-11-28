@@ -37,6 +37,14 @@ class BodyInfo extends React.Component<BodyInfoProps, void> {
   static Email = BodyEmail
   static Name = BodyName
 
+  getAditionalProps = ({className, ...props}: any = {}) => {
+    return {
+      'aria-expanded': false,
+      className: `uppercase ${className}`,
+      ...props
+    }
+  }
+
   render() {
     return (
       <UserContextConsumer>
@@ -50,9 +58,7 @@ class BodyInfo extends React.Component<BodyInfoProps, void> {
             >
               { this.props.render({
                   ...context.state,
-                  aditionalProps: {
-                    'aria-expanded': false
-                  }
+                  getAditionalProps: this.getAditionalProps
                 })
               }
             </Box>

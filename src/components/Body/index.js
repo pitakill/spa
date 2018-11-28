@@ -13,11 +13,14 @@ const Body = (props: BodyProps): React.Element<typeof Box> =>
     gap='large'
     margin={{top: 'medium'}}
   >
-    <BodyInfo render={({avatar, email, name, aditionalProps}) => (
+    <BodyInfo render={({avatar, email, name, getAditionalProps}) => (
       <>
         <img src={avatar} alt={name}/>
-        <p {...aditionalProps}>{name}</p>
-        <p {...aditionalProps}>{email}</p>
+        <p {...getAditionalProps({
+          className: 'red',
+          id: '489fdasb'
+        })}>{name}</p>
+        <p {...getAditionalProps()}>{email}</p>
       </>
     )} />
   </Box>
