@@ -4,7 +4,7 @@ import * as React from 'react'
 import type { UserContextShape, UserContextProviderProps, UserContextProviderState } from './types'
 import * as firebase from '../../firebase'
 
-const UserContext = React.createContext<UserContextShape>({
+export const UserContext = React.createContext<UserContextShape>({
   state: {
     avatar: '',
     email: '',

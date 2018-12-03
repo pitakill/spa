@@ -3,7 +3,7 @@ import * as React from 'react'
 import type { BodyProps } from './types'
 import { Box } from 'grommet'
 
-import { BodyInfo } from '../BodyInfo'
+import { DatabaseContext } from '../DatabaseContext'
 
 const Body = (props: BodyProps): React.Element<typeof Box> =>
   <Box
@@ -13,16 +13,11 @@ const Body = (props: BodyProps): React.Element<typeof Box> =>
     gap='large'
     margin={{top: 'medium'}}
   >
-    <BodyInfo render={({avatar, email, name, getAditionalProps}) => (
-      <>
-        <img src={avatar} alt={name}/>
-        <p {...getAditionalProps({
-          className: 'red',
-          id: '489fdasb'
-        })}>{name}</p>
-        <p {...getAditionalProps()}>{email}</p>
-      </>
-    )} />
+    <DatabaseContext.Consumer>
+      { context =>
+          <input value={context.state.value} onChange={context.writeData}/>
+      }
+    </DatabaseContext.Consumer>
   </Box>
 
 export default Body

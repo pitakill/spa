@@ -8,6 +8,7 @@ import locale_en from 'react-intl/locale-data/en'
 import locale_es from 'react-intl/locale-data/es'
 
 import Body from './components/Body'
+import { DatabaseContextProvider } from './components/DatabaseContext'
 import Header from './components/Header'
 import messages_en from './translations/en.json'
 import messages_es from './translations/es.json'
@@ -40,7 +41,9 @@ class App extends React.Component<AppProps, AppState> {
                 changeLocale={this.changeLocale}
                 locale={this.state.locale}
               />
-              <Body />
+              <DatabaseContextProvider>
+                <Body />
+              </DatabaseContextProvider>
             </Box>
           </IntlProvider>
         </Grommet>
