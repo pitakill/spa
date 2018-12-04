@@ -1,5 +1,5 @@
 // @flow
-export type AppProps = {}
-export type AppState = {
+export type AppProps = {
   locale: string
 }
+export type AppState = {}

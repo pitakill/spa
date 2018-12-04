@@ -4,8 +4,10 @@ import type { HeaderProps } from './types'
 import { Box, Heading, Menu } from 'grommet'
 import { Flag, Login, Logout, User } from 'grommet-icons'
 import { FormattedMessage } from 'react-intl'
+import { connect } from 'react-redux'
 
 import Avatar from '../Avatar'
+import { changeLocale } from '../../actions'
 
 import { UserContextConsumer } from '../UserContext'
 
@@ -30,7 +32,10 @@ const Header = (props: HeaderProps): React.Element<typeof Box> =>
                 {
                   label: props.locale === 'en' ? 'es' : 'en',
                   icon: <Flag />,
-                  onClick: props.changeLocale
+                  onClick: () => {
+                    const locale = props.locale === 'en' ? 'es' : 'en'
+                    props.changeLocale(locale)
+                  }
                 },
                 {
                   label: context.state.loggedIn ? <FormattedMessage id='logout' /> : <FormattedMessage id='login' />,
@@ -44,4 +49,11 @@ const Header = (props: HeaderProps): React.Element<typeof Box> =>
     }
   </UserContextConsumer>
 
-export default Header
+const mapStateToProps = locale => ({ locale })
+
+const mapDispatchToProps = { changeLocale }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header)

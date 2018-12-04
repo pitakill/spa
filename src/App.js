@@ -6,6 +6,7 @@ import { grommet } from 'grommet/themes'
 import { addLocaleData, IntlProvider } from 'react-intl'
 import locale_en from 'react-intl/locale-data/en'
 import locale_es from 'react-intl/locale-data/es'
+import { connect } from 'react-redux'
 
 import Body from './components/Body'
 import Header from './components/Header'
@@ -22,24 +23,15 @@ const messages = {
 }
 
 class App extends React.Component<AppProps, AppState> {
-  state = {
-    locale: 'es'
-  }
-
-  changeLocale = () => {
-    this.setState({locale: this.state.locale === 'en' ? 'es' : 'en'})
-  }
-
   render(): React.Element<typeof Grommet> {
+    const { locale } = this.props
+
     return (
       <UserContextProvider>
         <Grommet theme={grommet}>
-          <IntlProvider locale={this.state.locale} messages={messages[this.state.locale]}>
+          <IntlProvider locale={locale} messages={messages[locale]}>
             <Box fill>
-              <Header
-                changeLocale={this.changeLocale}
-                locale={this.state.locale}
-              />
+              <Header />
               <Body />
             </Box>
           </IntlProvider>
@@ -49,4 +41,11 @@ class App extends React.Component<AppProps, AppState> {
   }
 }
 
-export default App
+const mapStateToProps = (state) => ({locale: state})
+
+const mapDispatchToProps = {}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
