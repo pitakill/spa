@@ -13,8 +13,6 @@ import Header from './components/Header'
 import messages_en from './translations/en.json'
 import messages_es from './translations/es.json'
 
-import { UserContextProvider } from './components/UserContext'
-
 addLocaleData([...locale_en, ...locale_es])
 
 const messages = {
@@ -27,25 +25,21 @@ class App extends React.Component<AppProps, AppState> {
     const { locale } = this.props
 
     return (
-      <UserContextProvider>
-        <Grommet theme={grommet}>
-          <IntlProvider locale={locale} messages={messages[locale]}>
-            <Box fill>
-              <Header />
-              <Body />
-            </Box>
-          </IntlProvider>
-        </Grommet>
-      </UserContextProvider>
+      <Grommet theme={grommet}>
+        <IntlProvider locale={locale} messages={messages[locale]}>
+          <Box fill>
+            <Header />
+            <Body />
+          </Box>
+        </IntlProvider>
+      </Grommet>
     )
   }
 }
 
-const mapStateToProps = (state) => ({locale: state})
-
-const mapDispatchToProps = {}
+const mapStateToProps = ({ locale }) => ({ locale })
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(App)

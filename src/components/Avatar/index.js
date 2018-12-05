@@ -2,18 +2,18 @@
 import * as React from 'react'
 import type { AvatarProps } from './types'
 import { Box } from 'grommet'
-
-import { UserContextConsumer } from '../UserContext'
+import { connect } from 'react-redux'
 
 const Avatar = (props: AvatarProps) =>
-  <UserContextConsumer>
-    { context =>
-      <Box
-        background={`url(${context.state.avatar})`}
-        height={props.size}
-        width={props.size}
-      />
-    }
-  </UserContextConsumer>
+  <Box
+    background={`url(${props.avatar})`}
+    height={props.size}
+    width={props.size}
+  />
 
-export default Avatar
+const mapStateToProps = ({ user: { avatar } }) => ({ avatar })
+
+export default connect(
+  mapStateToProps,
+  null
+)(Avatar)

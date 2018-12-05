@@ -9,7 +9,10 @@
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
     "react-intl": "^2.7.2",
+    "react-redux": "^5.1.1",
     "react-scripts": "2.1.1",
+    "redux": "^4.0.1",
+    "redux-saga": "^0.16.2",
     "styled-components": "^4.0.3"
   },
   "scripts": {

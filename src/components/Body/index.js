@@ -3,7 +3,7 @@ import * as React from 'react'
 import type { BodyProps } from './types'
 import { Box } from 'grommet'
 
-import { BodyInfo } from '../BodyInfo'
+import BodyInfo from '../BodyInfo'
 
 const Body = (props: BodyProps): React.Element<typeof Box> =>
   <Box

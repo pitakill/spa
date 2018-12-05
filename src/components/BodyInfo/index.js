@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react'
 import { Box, Heading } from 'grommet'
+import { connect } from 'react-redux'
 
 import type {
   BodyAvatarProps,
@@ -11,26 +12,15 @@ import type {
 } from './types'
 
 import Avatar from '../Avatar'
-import { UserContextConsumer } from '../UserContext'
 
-const BodyAvatar = (props: BodyAvatarProps) => {
-  const { size = 'xsmall' } = props
-  return <Avatar size={size} />
-}
+const BodyAvatar = (props: BodyAvatarProps) =>
+  <Avatar {...{props}} />
 
-const BodyEmail = () =>
-  <UserContextConsumer>
-    { context =>
-        <Heading level='4' margin='none'>{context.state.email}</Heading>
-    }
-  </UserContextConsumer>
+const BodyEmail = ({ email }) =>
+  <Heading level='4' margin='none'>{email}</Heading>
 
-const BodyName = () =>
-  <UserContextConsumer>
-    { context =>
-        <Heading level='4' margin='none'>{context.state.name}</Heading>
-    }
-  </UserContextConsumer>
+const BodyName = ({ name }) =>
+  <Heading level='4' margin='none'>{name}</Heading>
 
 class BodyInfo extends React.Component<BodyInfoProps, void> {
   static Avatar = BodyAvatar
@@ -46,43 +36,39 @@ class BodyInfo extends React.Component<BodyInfoProps, void> {
   }
 
   render() {
+    const { render, ...props } = this.props
     return (
-      <UserContextConsumer>
-        { context =>
-            <Box
-              align='center'
-              direction='row'
-              justify='center'
-              gap='large'
-              margin={{top: 'medium'}}
-            >
-              { this.props.render({
-                  ...context.state,
-                  getAditionalProps: this.getAditionalProps
-                })
-              }
-            </Box>
+      <Box
+        align='center'
+        direction='row'
+        justify='center'
+        gap='large'
+        margin={{top: 'medium'}}
+      >
+        { render({
+            ...props,
+            getAditionalProps: this.getAditionalProps
+          })
         }
-      </UserContextConsumer>
+      </Box>
     )
   }
 }
 
-function withBodyInfo (Component: ComponentShape) {
+function withBodyInfo (Component: ComponentShape, props: {}) {
   return class extends React.Component<BodyHOCProps, BodyHOCState> {
     render() {
-      return (
-        <UserContextConsumer>
-          { context =>
-              <Component {...context.state} />
-          }
-        </UserContextConsumer>
-      )
+      return <Component {...props} />
     }
   }
 }
 
 export {
-  BodyInfo,
   withBodyInfo
 }
+
+const mapStateToProps = ({ user }) => ({ ...user })
+
+export default connect(
+  mapStateToProps
+)(BodyInfo)
