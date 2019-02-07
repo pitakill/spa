@@ -5,9 +5,14 @@ import { Box, Heading, Menu } from 'grommet'
 import { Flag, Login, Logout, User } from 'grommet-icons'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
+import { navigate } from '@reach/router'
 
 import Avatar from '../Avatar'
 import { changeLocale, handleLogin, handleLogout } from '../../actions'
+
+const signOut = () => {
+  window.localStorage.removeItem('token')
+}
 
 const Header = (props: HeaderProps): React.Element<typeof Box> =>
   <Box
@@ -34,9 +39,9 @@ const Header = (props: HeaderProps): React.Element<typeof Box> =>
               }
             },
             {
-              label: props.user.loggedIn ? <FormattedMessage id='logout' /> : <FormattedMessage id='login' />,
-              icon: props.user.loggedIn ? <Logout /> : <Login />,
-              onClick: props.user.loggedIn ? props.handleLogout : props.handleLogin
+              label: window.localStorage.getItem('token') ? <FormattedMessage id='logout' /> : <FormattedMessage id='login' />,
+              icon: window.localStorage.getItem('token') ? <Logout /> : <Login />,
+              onClick: window.localStorage.getItem('token') ? signOut : () => navigate('login')
             }
           ]}
         />

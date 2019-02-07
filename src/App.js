@@ -7,9 +7,12 @@ import { addLocaleData, IntlProvider } from 'react-intl'
 import locale_en from 'react-intl/locale-data/en'
 import locale_es from 'react-intl/locale-data/es'
 import { connect } from 'react-redux'
+import { Router } from '@reach/router'
 
 import Body from './components/Body'
 import Header from './components/Header'
+import Login from './components/Login'
+
 import messages_en from './translations/en.json'
 import messages_es from './translations/es.json'
 
@@ -27,10 +30,13 @@ class App extends React.Component<AppProps, AppState> {
     return (
       <Grommet theme={grommet}>
         <IntlProvider locale={locale} messages={messages[locale]}>
-          <Box fill>
-            <Header />
-            <Body />
-          </Box>
+            <Box fill>
+              <Header />
+              <Router>
+                <Body path="/" />
+                <Login path="login" />
+              </Router>
+            </Box>
         </IntlProvider>
       </Grommet>
     )

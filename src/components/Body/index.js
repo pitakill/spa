@@ -3,26 +3,42 @@ import * as React from 'react'
 import type { BodyProps } from './types'
 import { Box } from 'grommet'
 
-import BodyInfo from '../BodyInfo'
+import Card from '../Card'
 
-const Body = (props: BodyProps): React.Element<typeof Box> =>
-  <Box
-    align='center'
-    direction='row'
-    justify='center'
-    gap='large'
-    margin={{top: 'medium'}}
-  >
-    <BodyInfo render={({avatar, email, name, getAditionalProps}) => (
-      <>
-        <img src={avatar} alt={name}/>
-        <p {...getAditionalProps({
-          className: 'red',
-          id: '489fdasb'
-        })}>{name}</p>
-        <p {...getAditionalProps()}>{email}</p>
-      </>
-    )} />
-  </Box>
+class Body extends React.Component<BodyProps, BodyState> {
+  state = {
+    posts: []
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:3000/posts', {
+      headers: {
+        Authorization: window.localStorage.getItem('token')
+      }
+    })
+    .then(r => r.json())
+      .then(({ posts }) => {
+        if (posts) this.setState({ posts })
+      })
+    .catch(console.error)
+  }
+
+  render() {
+    return (
+      <Box
+        align='center'
+        direction='row'
+        justify='center'
+        gap='large'
+        wrap={true}
+        margin={{top: 'medium'}}
+      >
+      {
+        this.state.posts.map(post => <Card key={post._id} {...post}/>)
+      }
+      </Box>
+    )
+  }
+}
 
 export default Body
